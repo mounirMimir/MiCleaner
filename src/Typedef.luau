@@ -51,7 +51,11 @@ export type PublicMethods<self> = {
 		signal: SignalLike<T...> | RBXScriptSignal,
 		callback: (T...) -> ()
 	) -> ConnectionLike,
-	read Once: <T...>(self: self, signal: SignalLike<T...> | RBXScriptSignal, callback: (T...) -> ()) -> ConnectionLike,
+	read Once: <T...>(
+		self: self,
+		signal: SignalLike<T...> | RBXScriptSignal,
+		callback: (T...) -> ()
+	) -> ConnectionLike,
 	read Attach: (self: self, instance: Instance) -> (),
 	read Clean: (self: self) -> (),
 	read Destroy: (self: self) -> (),
@@ -63,12 +67,9 @@ export type PrivateMethods<T> = {
 	read __FindAndCleanObject: (self: T, obj: Cleanable) -> boolean,
 }
 
-export type CleanerObject = PublicMethods<CleanerObject> & PublicAttributes
-export type CleanerInternal =
-	PrivateAttributes
-	& PrivateMethods<CleanerInternal>
-	& PublicAttributes
-	& PublicMethods<CleanerInternal>
+export type CleanerObject = PublicMethods<any> & PublicAttributes
+export type CleanerInternal = PrivateAttributes & PrivateMethods<any> & PublicAttributes & PublicMethods<any>
+
 export type CleanerClass = {
 	read new: () -> CleanerObject,
 	read UseSignal: (SignalCn: () -> SignalLike<...any>) -> (),
