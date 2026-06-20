@@ -175,7 +175,7 @@ local PublicMethods: PublicMethods<CleanerInternal> = {
 
 	Extend = function(self)
 		self:__CheckIfCleaning(`Extend`)
-		return self:Construct(MiCleaner.new, `Destroy`)
+		return self:Construct(MiCleaner, `Destroy`)
 	end,
 
 	Construct = function<T, A...>(self, class: Constructable<T, A...>, cleanUpMethod, ...: A...): T
@@ -187,7 +187,7 @@ local PublicMethods: PublicMethods<CleanerInternal> = {
 		return self:Add(object, cleanUpMethod)
 	end,
 
-	Constructer = function<T, A...>(self, class: Constructable<T, A...>, cleanUpMethod): T
+	Constructer = function<T, A...>(self, class, cleanUpMethod): T
 		self:__CheckIfCleaning(`Constructer`)
 		return function(...)
 			return self:Construct(class, cleanUpMethod, ...)
