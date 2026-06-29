@@ -178,7 +178,7 @@ local PublicMethods: PublicMethods<CleanerInternal> = {
 		return self:Construct(MiCleaner, `Destroy`)
 	end,
 
-	Construct = function<T, A...>(self, class: Constructable<T, A...>, cleanUpMethod, ...: A...): T
+	Construct = function<T, A...>(self, class: Constructable<T, A...>, cleanUpMethod, ...)
 		self:__CheckIfCleaning(`Construct`)
 		local object = if typeof(class) == "table"
 			then class.new(...)
@@ -187,7 +187,7 @@ local PublicMethods: PublicMethods<CleanerInternal> = {
 		return self:Add(object, cleanUpMethod)
 	end,
 
-	Constructer = function<T, A...>(self, class, cleanUpMethod): T
+	Constructer = function(self, class, cleanUpMethod)
 		self:__CheckIfCleaning(`Constructer`)
 		return function(...)
 			return self:Construct(class, cleanUpMethod, ...)

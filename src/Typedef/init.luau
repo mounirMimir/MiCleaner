@@ -1,3 +1,5 @@
+const Flatten = require("@self/Flatten")
+type Flatten<t> = Flatten.FlattenTable<t>
 export type CleanUpFunction = (obj: any) -> ()
 export type Constructable<T, A...> = { new: (A...) -> T } | (A...) -> T
 
@@ -67,8 +69,8 @@ export type PrivateMethods<T> = {
 	read __FindAndCleanObject: (self: T, obj: Cleanable) -> boolean,
 }
 
-export type CleanerObject = PublicMethods<any> & PublicAttributes
-export type CleanerInternal = PrivateAttributes & PrivateMethods<any> & PublicAttributes & PublicMethods<any>
+export type CleanerObject = Flatten<PublicMethods<any> & PublicAttributes>
+export type CleanerInternal = Flatten<PrivateAttributes & PrivateMethods<any> & CleanerObject>
 
 export type CleanerClass = {
 	read new: () -> CleanerObject,
